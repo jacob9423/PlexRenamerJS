@@ -1,0 +1,66 @@
+#directoryDisplay{
+    width: 650px;
+    height: 25px;
+    float: right;
+}
+
+#folderPicker{
+    display: none;
+}
+#folderPickerButton{
+    height: 30px;
+}
+/* #lblShowName{
+    float: left;
+    width: 15%;
+}
+#txtShowName{
+    float: left;
+    width: 15%;
+}
+#seasonDiv{
+    float: left;
+    width: 15%; 
+} */
+#controlsInformationDiv{
+    float: bottom;
+    float: left;
+}
+
+#controls{
+    float: left;
+    width: 15%; 
+}
+
+#txtShowName{
+    width: 100px;
+}
+
+#numSeason{
+    width: 100px;
+}
+
+/* from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_vertical_menu_scroll */
+.vertical-menu {
+    float: right;
+    width: 80%;
+    height: 395px;
+    overflow-y: auto;
+  }
+  
+  .vertical-menu a {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+  }
+  
+  .vertical-menu a:hover {
+    background-color: #ccc;
+  }
+  
+  .vertical-menu a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
