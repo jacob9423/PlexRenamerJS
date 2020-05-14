@@ -8,6 +8,7 @@ let NumOfFiles;
 let NameOfShow;
 let Season;
 let SubLang;
+let SubLangBool = false;
 let NoPath = true;
 let FirstRun = false;
 let StartingEp = 1;
@@ -27,6 +28,7 @@ function clearData(ClearDirectory){
             NameOfShow = "Please enter show name";
             SubLang = null;
             Season = 0;
+            SubLangBool = false;
         }
 module.exports={OldfileNames, NewFileNames, Path, InitalPath, FileType, NumOfFiles, NameOfShow, Season, SubLang, NoPath, FirstRun, StartingEp,clearData};
     

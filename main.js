@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const Data = require('./data.js');
+const Data = require('./src/js/data.js');
 
 let mainWindow;
 
@@ -12,7 +12,7 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('./src/html/index.html');
 }
 
 
