@@ -19,6 +19,11 @@ async function OpenFolderDiolog(){
     displayList(indexData.OldfileNames);   
 }
 
+async function refreshList(){
+    getFileNames();
+    displayList(indexData.OldfileNames);
+}
+
 async function getFileNames(){
     document.getElementById('directoryDisplay').value = indexData.Path;
     indexData.OldfileNames = fs.readdirSync(indexData.Path);
@@ -32,7 +37,7 @@ async function displayList(listToDisplay){
     listToDisplay.forEach(function(listToDisplay){
         var li = document.createElement("a");
         li.text = listToDisplay;
-        document.getElementById('listOfFiles').appendChild(li)
+        document.getElementById('listOfFiles').appendChild(li);
         console.log("working");
     });
 }

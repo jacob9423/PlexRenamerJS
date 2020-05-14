@@ -30,5 +30,5 @@ function clearData(ClearDirectory){
             Season = 0;
             SubLangBool = false;
         }
-module.exports={OldfileNames, NewFileNames, Path, InitalPath, FileType, NumOfFiles, NameOfShow, Season, SubLang, NoPath, FirstRun, StartingEp,clearData};
+module.exports={OldfileNames, NewFileNames, Path, InitalPath, FileType, NumOfFiles, NameOfShow, Season, SubLang, NoPath, FirstRun, StartingEp,SubLangBool,clearData};
     

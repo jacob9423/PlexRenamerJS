@@ -6,6 +6,7 @@
     <script type="text/javascript" src="../js/index.js"></script>
  
   </head>
+  <body>
   <form>
     <button id="folderPickerButton" type="button" onclick="OpenFolderDiolog()">Pick Directory</button>
     <input id="directoryDisplay" type="text" readonly/>
@@ -35,7 +36,7 @@
     </div>
 
     <div id="controlsInformationDiv">
-      <button id="btnRefreshList" type="button">Refresh List</button>
+      <button id="btnRefreshList" type="button" onclick="refreshList()">Refresh List</button>
       <br/>
       <br/>
       <button id="btnRename" type="button">Rename</button>
