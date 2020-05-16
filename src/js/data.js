@@ -1,20 +1,20 @@
 
-let OldfileNames;
-let NewFileNames;
-let Path;
-let InitalPath;
-let FileType;
-let NumOfFiles;
-let NameOfShow;
-let Season;
-let SubLang;
-let SubLangBool = false;
-let NoPath = true;
-let FirstRun = false;
-let StartingEp = 1;
+var OldfileNames = [];
+var NewFileNames = [];
+var Path;
+var InitalPath;
+var FileType;
+var NumOfFiles;
+var NameOfShow;
+var Season;
+var SubLang;
+var SubLangBool = false;
+var NoPath = true;
+var FirstRun = false;
+var StartingEp = 1;
 
 function clearData(ClearDirectory){
-            if (ClearDirectory == false){
+            if (!ClearDirectory){
                 // no need to change path
                 NoPath = false;
             }else{
