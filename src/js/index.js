@@ -32,11 +32,11 @@ function newFileNames(OldNames,OldNameCount,StartingEp){
     {
         if (EpCount < 10)
         {
-            NewNames.push(`${indexData.Path}\\${indexData.NameOfShow} - s${SeasonString}e0${EpCount}${indexData.FileType}`);
+            NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${SeasonString}e0${EpCount}${indexData.FileType}`);
         }
         else
         {
-            NewNames.push(`${indexData.Path}\\${indexData.NameOfShow} - s${SeasonString}e${EpCount}${indexData.FileType}`);
+            NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${SeasonString}e${EpCount}${indexData.FileType}`);
         }
         EpCount++;
     }
