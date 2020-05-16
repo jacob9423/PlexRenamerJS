@@ -10,6 +10,39 @@ const indexData = require('./../js/data.js');
 
 let selectedFilePath;
 
+async function rename(){
+    indexData.NameOfShow = document.getElementById('txtShowName').value;
+    indexData.Season = document.getElementById('numSeason').value;
+    indexData.newFileNames = newFileNames(indexData.OldfileNames,indexData.OldfileNames.length,indexData.StartingEp);
+    displayList(indexData.newFileNames);
+    console.log(indexData.newFileNames);
+}
+
+function newFileNames(OldNames,OldNameCount,StartingEp){
+    let NewNames = [];
+    let SeasonString = indexData.Season;
+    let EpCount = indexData.StartingEp;
+
+    if (indexData.Season < 10)
+    {
+        SeasonString = "0" + indexData.Season;
+    }
+
+    for (let i = 0; i < OldNameCount; i++)
+    {
+        if (EpCount < 10)
+        {
+            NewNames.push(`${indexData.Path}\\${indexData.NameOfShow} - s${SeasonString}e0${EpCount}${indexData.FileType}`);
+        }
+        else
+        {
+            NewNames.push(`${indexData.Path}\\${indexData.NameOfShow} - s${SeasonString}e${EpCount}${indexData.FileType}`);
+        }
+        EpCount++;
+    }
+
+    return NewNames;
+}
 
 async function OpenFolderDiolog(){    
     let promise = await (dialog.showOpenDialog({ properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
@@ -32,7 +65,7 @@ async function getFileNames(){
     console.log(indexData.FileType);
 }
 
-async function displayList(listToDisplay){
+function displayList(listToDisplay){
     document.getElementById('listOfFiles').innerHTML = "";
     listToDisplay.forEach(function(listToDisplay){
         var li = document.createElement("a");
@@ -78,8 +111,8 @@ function epiClick(){
         if(document.getElementById('chkEpisode').checked == true){ 
     
             const window = new BrowserWindow({
-                  height: 200,
-                  width: 320,
+                  height: 180,
+                  width: 260,
                   resizable: false,
                   frame: false,
                   webPreferences: {
