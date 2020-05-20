@@ -5,121 +5,73 @@ const fs = require('fs');
 const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
 
-const indexData = require('./../js/data.js');
+const fileTools =require('./../js/fileTools.js');
 
 
 let selectedFilePath;
 
 function rename(){
     // to check if ther user is running this program a secound time. 
-    //If so they could have already picked a directory and would like to use the one they already selected
-    // if(indexData.FirstRun){
-    //     //get out of if statements and go on and run the program
-    // }
-    // else if (indexData.OldfileNames.length != 0 && !indexData.NoPath){
-    //     indexData.clearData(false);
-    // }
-    // else if(indexData.OldfileNames.length != 0)
-    // {
-    //     indexData.clearData(true);
-    // }
+    // If so they could have already picked a directory and would like to use the one they already selected
+    if(fileTools.indexData.FirstRun){
+        //get out of if statements and go on and run the program
+    } else if (fileTools.indexData.OldfileNames.length != 0 && !fileTools.indexData.NoPath){
+        fileTools.indexData.clearData(false);
+    } else if(fileTools.indexData.OldfileNames.length != 0){
+        fileTools.indexData.clearData(true);
+    }
 
-    //indexData.StartingEp = document.getElementById('numEpisode').value;
+    if(document.getElementById('chkEpisode').checked){
+        fileTools.indexData.StartingEp = document.getElementById('numEpisode').value;
+    }
     
     CheckIfNoPath();
     GetShowData();
 
     if (document.getElementById('chkSubs').checked){
         if(!document.getElementById('txtSubLang').value){
-            indexData.SubLang = document.getElementById('txtSubLang').value;
+            fileTools.indexData.SubLang = document.getElementById('txtSubLang').value;
         }
-        indexData.NewFileNames = GenerateNewNamesForSubs(indexData.OldFileNames, indexData.OldfileNames.length, indexData.StartingEp);
+        fileTools.indexData.NewFileNames = fileTools.GenerateNewNamesForSubs(fileTools.indexData.OldFileNames, fileTools.indexData.OldfileNames.length, fileTools.indexData.StartingEp);
+    } else{
+        fileTools.indexData.NewFileNames = fileTools.GenerateNewNames(fileTools.indexData.OldFileNames, fileTools.indexData.OldfileNames.length, fileTools.indexData.StartingEp);
     }
-    else{
-        indexData.NewFileNames = GenerateNewNames(indexData.OldFileNames, indexData.OldfileNames.length, indexData.StartingEp);
+    //let confirmBox = confirm("Are you sure you sure you want to rename?");
+    let confrimBoxOptions = {
+        type: 'question',
+        buttons: ['No', 'yes', ],
+        defaultId: 1,
+        title: 'Question',
+        message: 'Are you sure you sure you want to rename?',
+        detail: 'Pressing rename will rename ALL files in directory. Please separate subtitles into a separate directory or they will be renamed with all the other files.',
     }
-
-    let confirmBox = confirm("Are you sure you sure you want to rename?")
-    if (confirmBox){
-        RenameFiles();
-        getFileNames();
-        displayList(indexData.NewFileNames);
-        indexData.NoPath = true;
+    let confirmBox = dialog.showMessageBoxSync(null,confrimBoxOptions);
+    if (confirmBox == 1){
+        fileTools.RenameFiles();
+        fileTools.getFileNames();
+        displayList(fileTools.indexData.NewFileNames);
+        fileTools.indexData.NoPath = true;
     }
-    indexData.FirstRun = false;   
-}
-
-function GenerateNewNames(OldNames,OldNameCount,StartingEp){
-    var NewNames = [];
-    var EpCount = indexData.StartingEp;
-    var SeasonString = indexData.Season;
-
-    if (indexData.Season < 10)
-    {
-        SeasonString = "0" + indexData.Season;
-    }
-
-    for (let i = 0; i < OldNameCount; i++)
-    {
-        if (EpCount < 10)
-        {
-            //NewNames.push(indexData.Path + "/" + indexData.NameOfShow + " - " + "s" + SeasonString + "e" + "0" + EpCount + indexData.FileType);
-           NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${SeasonString}e0${EpCount}${indexData.FileType}`);
-        }
-        else
-        {
-            //NewNames.push(indexData.Path + "/" + indexData.NameOfShow + " - " + "s" + SeasonString + "e" + EpCount + indexData.FileType);
-           NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${SeasonString}e${EpCount}${indexData.FileType}`);
-        }
-        EpCount++;
-    }
-    return NewNames;
-}
-
-function GenerateNewNamesForSubs(OldNames,OldNameCount,StartingEp){
-    let NewNames = [];
-    let SeasonString = FileData.Season;
-    let EpCount = StartingEp;
-
-    if (!indexData.SubLang){
-        indexData.SubLang = "eng";
-    }
-
-    if (indexData.Season < 10){
-        SeasonString = "0" + indexData.Season;
-    }
-
-    for (let i = 0; i < OldNameCount; i++){
-        if (EpCount < 10)
-        {
-            NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${indexData.Season}e0${EpCount}.${indexData.SubLang}.${FileData.FileType}`);
-        }
-        else
-        {
-            NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${indexData.Season}e${EpCount}.${indexData.SubLang}.${FileData.FileType}`);
-        }
-        EpCount++;
-    }
-    return NewNames;
+    fileTools.indexData.FirstRun = false;   
 }
 
 async function OpenFolderDialog(){    
     let promise = await (dialog.showOpenDialog({ properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
-    indexData.Path = selectedFilePath[0];
-    getFileNames();
-    displayList(indexData.OldfileNames);  
-    indexData.NoPath = false; 
+    fileTools.indexData.Path = selectedFilePath[0];
+    fileTools.getFileNames();
+    displayList(fileTools.indexData.OldfileNames);  
+    fileTools.indexData.NoPath = false; 
+}
+
+function CheckIfNoPath(){
+    if (fileTools.indexData.NoPath){
+        OpenFolderDialog();
+    }
 }
 
 function refreshList(){
-    getFileNames();
-    displayList(indexData.OldfileNames);
-}
-
-function getFileNames(){
-    document.getElementById('directoryDisplay').value = indexData.Path;
-    indexData.OldfileNames = fs.readdirSync(indexData.Path);
-    indexData.FileType = path.extname(indexData.OldfileNames[0]);
+    fileTools.getFileNames();
+    displayList(fileTools.indexData.OldfileNames);
 }
 
 function displayList(listToDisplay){
@@ -130,6 +82,22 @@ function displayList(listToDisplay){
         document.getElementById('listOfFiles').appendChild(li);
         console.log("working");
     });
+}
+
+function GetShowData(){
+    fileTools.indexData.NameOfShow = document.getElementById('txtShowName').value;
+    fileTools.indexData.Season = document.getElementById('numSeason').value;
+    fileTools.getFileNames();
+
+    // to fix a bug where if the user picks a folder with only folders in it the program will error out.
+    try{
+        fileTools.indexData.FileType = path.extname(fileTools.indexData.OldfileNames[0]);
+    }
+    catch{
+        // alert("Are you trying to rename a Folder without video files in it? Please select another folder");
+        dialog.showErrorBox('Renaming folders are we?','Are you trying to rename a Folder without video files in it? Please select another folder');
+        OpenFolderDialog();
+    }
 }
 
 function subtitlesClick(){
@@ -147,89 +115,49 @@ function subtitlesClick(){
         win.loadURL('file://' + __dirname +'/subtitlePrompt.html'); 
     }
     else{
-        indexData.SubLangBool;
+        fileTools.indexData.SubLangBool;
     }
     console.log(indexData.SubLang);
 }
 
 function subtitleWindowDone(){
-    indexData.SubLang = document.getElementById('txtSubLang').value;
-    indexData.SubLangBool = true;
+    fileTools.indexData.SubLang = document.getElementById('txtSubLang').value;
+    fileTools.indexData.SubLangBool = true;
     console.log(indexData.SubLang);
     window.close();
 }
 
 function subtitleWindowCancel(){
-    indexData.SubLangBool = false;
+    fileTools.indexData.SubLangBool = false;
     window.close();
 }
 
-function epiClick(){
-        if(document.getElementById('chkEpisode').checked == true){ 
-    
-            const window = new BrowserWindow({
-                  height: 180,
-                  width: 260,
-                  resizable: false,
-                  frame: false,
-                  webPreferences: {
-                    nodeIntegration: true
-                  }
-            });
-              
-            window.loadURL('file://' + __dirname +'/episodePrompt.html');
-        }
-        else{
-            indexData.StartingEp = 1;
-        }      
-}
-
-function CheckIfNoPath(){
-    if (indexData.NoPath){
-        OpenFolderDialog();
-    }
-}
-
-function GetShowData(){
-    indexData.NameOfShow = document.getElementById('txtShowName').value;
-    indexData.Season = document.getElementById('numSeason').value;
-    getFileNames();
-
-    // to fix a bug where if the user picks a folder with only folders in it the program will error out.
-    try
-    {
-        indexData.FileType = path.extname(indexData.OldfileNames[0]);
-    }
-    catch
-    {
-        alert("Are you trying to rename a Folder without video files in it? Please select another folder");
-        OpenFolderDialog();
-    }
-
-}
-
-function RenameFiles(){
-let oldFiles = [];
-
-
-for (let i = 0; i < indexData.OldfileNames.length; i++){
-    oldFiles.push(indexData.Path + "/" + indexData.OldfileNames[i]);
-    }
- 
-    console.log(oldFiles);
-    console.log(indexData.NewFileNames);
- 
-    for (let i = 0; i < indexData.OldfileNames.length; i++){
-        fs.renameSync(oldFiles[i], indexData.NewFileNames[i]);
-    }
-}
-
 function epiDone(){
-    indexData.StartingEp = document.getElementById('numEpisode').value;
+    fileTools.indexData.StartingEp = document.getElementById('numEpisode').value;
     window.close();
 }
 
 function epiCancel(){
-    indexData.StartingEp = 1;
+    fileTools.indexData.StartingEp = 1;
     window.close();
+}
+
+function epiClick(){
+    if(document.getElementById('chkEpisode').checked == true){ 
+
+        const window = new BrowserWindow({
+              height: 180,
+              width: 260,
+              resizable: false,
+              frame: false,
+              webPreferences: {
+                nodeIntegration: true
+              }
+        });
+          
+        window.loadURL('file://' + __dirname +'/episodePrompt.html');
+    }
+    else{
+        fileTools.indexData.StartingEp = 1;
+    }      
 }

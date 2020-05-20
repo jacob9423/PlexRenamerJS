@@ -10,7 +10,7 @@ var Season;
 var SubLang;
 var SubLangBool = false;
 var NoPath = true;
-var FirstRun = false;
+var FirstRun = true;
 var StartingEp = 1;
 
 function clearData(ClearDirectory){
@@ -21,8 +21,8 @@ function clearData(ClearDirectory){
                 Path = "null";
                 NoPath = true;
             }
-            OldFileNames.Clear();
-            NewFileNames.Clear();
+            OldFileNames = [];
+            NewFileNames = [];
             FileType = "null";
             NumOfFiles = 0;
             NameOfShow = "Please enter show name";
