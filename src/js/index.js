@@ -1,6 +1,7 @@
 const electron = require('electron');
 const dialog = require('electron').remote.dialog;
 const remote = require('electron').remote;
+const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
@@ -24,10 +25,10 @@ function rename(){
     // if(document.getElementById('chkEpisode').checked){
     //     fileTools.indexData.StartingEp = document.getElementById('numEpisode').value;
     // }
-    
+
     CheckIfNoPath();
     GetShowData();
-    console.log(fileTools.indexData.StartingEp);
+
 
     if (document.getElementById('chkSubs').checked){
         if(!document.getElementById('txtSubLang').value){
@@ -154,7 +155,8 @@ function epiClick(){
 }
 
 function epiDone(){
-    fileTools.indexData.StartingEp = parseInt(document.getElementById('numEpisode').value);
+    let returnToMain = parseInt(document.getElementById('numEpisode').value);
+    ipcRenderer.send('fromEpiDone',returnToMain);
     window.close();
 }
 

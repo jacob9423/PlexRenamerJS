@@ -2,8 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
 const indexData = require('./../js/data.js');
+var test;
 
 module.exports={indexData,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs};
+
+// get starting episode from episode window if it was sent
+ipcRenderer.send('requestFromIndexForStartEp');
+ipcRenderer.on('responceToIndexForStartep', function(event, data) {
+test = data;
+console.log(indexData.StartingEp + "this is from the Filetools");
+});
+
 
 function getFileNames(){
     document.getElementById('directoryDisplay').value = indexData.Path;
@@ -25,21 +34,22 @@ function RenameFiles(){
 function GenerateNewNames(OldNames,OldNameCount,StartingEp){
     let NewNames = [];
     let EpCount = StartingEp;
-    let SeasonString = indexData.Season;
     console.log(EpCount);
+    let SeasonString = indexData.Season;
 
     if (indexData.Season < 10){
         SeasonString = "0" + indexData.Season;
     }
 
     for (let i = 0; i < OldNameCount; i++){
-        if (EpCount < 10){
+        if (indexData.StartingEp < 10){
             //NewNames.push(indexData.Path + "/" + indexData.NameOfShow + " - " + "s" + SeasonString + "e" + "0" + EpCount + indexData.FileType);
            NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${SeasonString}e0${EpCount}${indexData.FileType}`);
         }else{
             //NewNames.push(indexData.Path + "/" + indexData.NameOfShow + " - " + "s" + SeasonString + "e" + EpCount + indexData.FileType);
            NewNames.push(`${indexData.Path}/${indexData.NameOfShow} - s${SeasonString}e${EpCount}${indexData.FileType}`);
         }
+        console.log(EpCount);
         EpCount++;
     }
     return NewNames;
