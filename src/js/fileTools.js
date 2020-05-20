@@ -23,9 +23,10 @@ function RenameFiles(){
     }
 
 function GenerateNewNames(OldNames,OldNameCount,StartingEp){
-    var NewNames = [];
-    var EpCount = indexData.StartingEp;
-    var SeasonString = indexData.Season;
+    let NewNames = [];
+    let EpCount = StartingEp;
+    let SeasonString = indexData.Season;
+    console.log(EpCount);
 
     if (indexData.Season < 10){
         SeasonString = "0" + indexData.Season;

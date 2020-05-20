@@ -21,12 +21,13 @@ function rename(){
         fileTools.indexData.clearData(true);
     }
 
-    if(document.getElementById('chkEpisode').checked){
-        fileTools.indexData.StartingEp = document.getElementById('numEpisode').value;
-    }
+    // if(document.getElementById('chkEpisode').checked){
+    //     fileTools.indexData.StartingEp = document.getElementById('numEpisode').value;
+    // }
     
     CheckIfNoPath();
     GetShowData();
+    console.log(fileTools.indexData.StartingEp);
 
     if (document.getElementById('chkSubs').checked){
         if(!document.getElementById('txtSubLang').value){
@@ -132,24 +133,14 @@ function subtitleWindowCancel(){
     window.close();
 }
 
-function epiDone(){
-    fileTools.indexData.StartingEp = document.getElementById('numEpisode').value;
-    window.close();
-}
-
-function epiCancel(){
-    fileTools.indexData.StartingEp = 1;
-    window.close();
-}
-
 function epiClick(){
-    if(document.getElementById('chkEpisode').checked == true){ 
+    if(document.getElementById('chkEpisode').checked){ 
 
         const window = new BrowserWindow({
               height: 180,
               width: 260,
               resizable: false,
-              frame: false,
+              frame: true,
               webPreferences: {
                 nodeIntegration: true
               }
@@ -161,3 +152,14 @@ function epiClick(){
         fileTools.indexData.StartingEp = 1;
     }      
 }
+
+function epiDone(){
+    fileTools.indexData.StartingEp = parseInt(document.getElementById('numEpisode').value);
+    window.close();
+}
+
+function epiCancel(){
+    fileTools.indexData.StartingEp = 1;
+    window.close();
+}
+
