@@ -6,7 +6,8 @@
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "^8.3.0"
+    "electron": "^8.3.0",
+    "electron-tooltip": "^1.1.5"
   },
   "dependencies": {}
 }

@@ -1,7 +1,5 @@
-const { app, BrowserWindow, ipcMain, webContents } = require('electron');
-const Data = require('./src/js/data.js');
+const { app, BrowserWindow} = require('electron');
 
-let test;
 let mainWindow;
 
 function createWindow () {
@@ -17,13 +15,7 @@ function createWindow () {
 }
 app.whenReady().then(createWindow);
 
-ipcMain.on('fromEpiDone', function(event, arg) {
-  let returnToIndex = arg;
-  mainWindow
-  ipcMain.on('requestFromIndexForStartEp', function(event, arg) {
-      event.sender.send('responceToIndexForStartep', returnToIndex);
-  });
-});
+
 
 
 

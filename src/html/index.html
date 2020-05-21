@@ -4,29 +4,23 @@
     <meta charset="UTF-8">
     <link href="../css/indexstyles.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../js/index.js"></script>
- 
   </head>
   <body>
-  <form>
     <button id="folderPickerButton" type="button" onclick="OpenFolderDialog()">Pick Directory</button>
     <input id="directoryDisplay" type="text" readonly/>
-    <input id="folderPicker" type="file" webkitdirectory/>
-
   <section id="controls">
     <div id="ShowDiv">
       <label id="lblShowName">Show Name:</label>
       <input id="txtShowName" type="text"/>
       <br/>
     </div>
-
-    <div id="seasonDiv">
+    <div class="toolTip" id="seasonDiv">
       <label id="lblSeason">Season:</label>
       <input id="numSeason" type="number"/>
       <br/>
     </div>
-
-    <div id="Subs/epicountDiv">
-      <label id="lblSubs">Subtitle Files?</label>
+    <div id="SubsEpicountDiv">
+      <label id="lblSubs" >Subtitle Files?</label>
       <input id="chkSubs" type="checkbox" onclick="subtitlesClick()"/>
       <br/>
       <label id= lblEpisode>Episode Start Count</label>
@@ -34,7 +28,6 @@
       <br/>
       <br/>
     </div>
-
     <div id="controlsInformationDiv">
       <button id="btnRefreshList" type="button" onclick="refreshList()">Refresh List</button>
       <br/>
@@ -43,7 +36,6 @@
       <br/>
       <label id="lblSubInfo">Pressing rename will rename ALL files in directory. Please separate subtitles into a separate directory</label>
       </div>
-
   </section>
   <aside id="fileList">
     <div class="vertical-menu" id="listOfFiles">
@@ -61,6 +53,23 @@
       <a>File 12</a>
     </div>
   </aside>
-  </form>
   </body>
+  <div id="epiDiv">
+    <p>Starting Episode</p>
+    <p>Please enter the episode to start at</p>
+    <input type="number" id="numEpisode"/>
+    <br/>
+    <br/>
+    <button id="btnEpiNumDone" onclick="epiDone()">Done</button>
+    <button id="btnEpiNumCancel" onclick="epiCancel()">Cancel</button>
+  </div>
+  <div id="subDiv">
+    <p>Subtitle Language</p>
+    <p>Please enter 3 letter subtitle ID. (Default English)</p>
+    <input type="text" id="txtSubLang"/>
+    <br/>
+    <br/>
+    <button id="btnSubDone" onclick="subtitleWindowDone()">Done</button>
+    <button id="btnSubCancel" onclick="subtitleWindowCancel()">Cancel</button>
+  </div>
 </html>

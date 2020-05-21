@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
 
+
 const fileTools =require('./../js/fileTools.js');
 
 
@@ -14,16 +15,16 @@ let selectedFilePath;
 function rename(){
     // to check if ther user is running this program a secound time. 
     // If so they could have already picked a directory and would like to use the one they already selected
-    if(fileTools.indexData.FirstRun){
+    if(fileTools.Data.FirstRun){
         //get out of if statements and go on and run the program
-    } else if (fileTools.indexData.OldfileNames.length != 0 && !fileTools.indexData.NoPath){
-        fileTools.indexData.clearData(false);
-    } else if(fileTools.indexData.OldfileNames.length != 0){
-        fileTools.indexData.clearData(true);
+    } else if (fileTools.Data.OldfileNames.length != 0 && !fileTools.Data.NoPath){
+        fileTools.Data.clearData(false);
+    } else if(fileTools.Data.OldfileNames.length != 0){
+        fileTools.Data.clearData(true);
     }
 
     // if(document.getElementById('chkEpisode').checked){
-    //     fileTools.indexData.StartingEp = document.getElementById('numEpisode').value;
+    //     fileTools.Data.StartingEp = document.getElementById('numEpisode').value;
     // }
 
     CheckIfNoPath();
@@ -32,13 +33,13 @@ function rename(){
 
     if (document.getElementById('chkSubs').checked){
         if(!document.getElementById('txtSubLang').value){
-            fileTools.indexData.SubLang = document.getElementById('txtSubLang').value;
+            fileTools.Data.SubLang = document.getElementById('txtSubLang').value;
         }
-        fileTools.indexData.NewFileNames = fileTools.GenerateNewNamesForSubs(fileTools.indexData.OldFileNames, fileTools.indexData.OldfileNames.length, fileTools.indexData.StartingEp);
+        fileTools.Data.NewFileNames = fileTools.GenerateNewNamesForSubs(fileTools.Data.OldFileNames, fileTools.Data.OldfileNames.length, fileTools.Data.StartingEp);
     } else{
-        fileTools.indexData.NewFileNames = fileTools.GenerateNewNames(fileTools.indexData.OldFileNames, fileTools.indexData.OldfileNames.length, fileTools.indexData.StartingEp);
+        fileTools.Data.NewFileNames = fileTools.GenerateNewNames(fileTools.Data.OldFileNames, fileTools.Data.OldfileNames.length, fileTools.Data.StartingEp);
     }
-    //let confirmBox = confirm("Are you sure you sure you want to rename?");
+
     let confrimBoxOptions = {
         type: 'question',
         buttons: ['No', 'yes', ],
@@ -51,29 +52,29 @@ function rename(){
     if (confirmBox == 1){
         fileTools.RenameFiles();
         fileTools.getFileNames();
-        displayList(fileTools.indexData.NewFileNames);
-        fileTools.indexData.NoPath = true;
+        displayList(fileTools.Data.NewFileNames);
+        fileTools.Data.NoPath = true;
     }
-    fileTools.indexData.FirstRun = false;   
+    fileTools.Data.FirstRun = false;   
 }
 
 async function OpenFolderDialog(){    
     let promise = await (dialog.showOpenDialog({ properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
-    fileTools.indexData.Path = selectedFilePath[0];
+    fileTools.Data.Path = selectedFilePath[0];
     fileTools.getFileNames();
-    displayList(fileTools.indexData.OldfileNames);  
-    fileTools.indexData.NoPath = false; 
+    displayList(fileTools.Data.OldfileNames);  
+    fileTools.Data.NoPath = false; 
 }
 
 function CheckIfNoPath(){
-    if (fileTools.indexData.NoPath){
+    if (fileTools.Data.NoPath){
         OpenFolderDialog();
     }
 }
 
 function refreshList(){
     fileTools.getFileNames();
-    displayList(fileTools.indexData.OldfileNames);
+    displayList(fileTools.Data.OldfileNames);
 }
 
 function displayList(listToDisplay){
@@ -87,81 +88,59 @@ function displayList(listToDisplay){
 }
 
 function GetShowData(){
-    fileTools.indexData.NameOfShow = document.getElementById('txtShowName').value;
-    fileTools.indexData.Season = document.getElementById('numSeason').value;
+    fileTools.Data.NameOfShow = document.getElementById('txtShowName').value;
+    fileTools.Data.Season = document.getElementById('numSeason').value;
     fileTools.getFileNames();
 
     // to fix a bug where if the user picks a folder with only folders in it the program will error out.
     try{
-        fileTools.indexData.FileType = path.extname(fileTools.indexData.OldfileNames[0]);
+        fileTools.Data.FileType = path.extname(fileTools.Data.OldfileNames[0]);
     }
     catch{
-        // alert("Are you trying to rename a Folder without video files in it? Please select another folder");
         dialog.showErrorBox('Renaming folders are we?','Are you trying to rename a Folder without video files in it? Please select another folder');
         OpenFolderDialog();
     }
 }
 
 function subtitlesClick(){
-    if(document.getElementById('chkSubs').checked){ 
-
-        const win = new BrowserWindow({
-              height: 200,
-              width: 320,
-              resizable: false,
-              frame: false,
-              webPreferences: {
-                nodeIntegration: true
-              }
-        });
-        win.loadURL('file://' + __dirname +'/subtitlePrompt.html'); 
-    }
-    else{
-        fileTools.indexData.SubLangBool;
-    }
-    console.log(indexData.SubLang);
+    if(document.getElementById('chkSubs').checked){
+        document.getElementById('subDiv').style.visibility = "visible";
+        document.getElementById('txtSubLang').focus();
+    } else {
+        document.getElementById('subDiv').style.visibility = "hidden"; 
+    }  
 }
 
 function subtitleWindowDone(){
-    fileTools.indexData.SubLang = document.getElementById('txtSubLang').value;
-    fileTools.indexData.SubLangBool = true;
-    console.log(indexData.SubLang);
-    window.close();
+    fileTools.Data.SubLang = document.getElementById('txtSubLang').value;
+    fileTools.Data.SubLangBool = true;
+    console.log(fileTools.Data.SubLang);
+    document.getElementById('subDiv').style.visibility = "hidden"; 
 }
 
 function subtitleWindowCancel(){
-    fileTools.indexData.SubLangBool = false;
-    window.close();
+    fileTools.Data.SubLangBool = false;
+    document.getElementById('subDiv').style.visibility = "hidden"; 
 }
 
 function epiClick(){
-    if(document.getElementById('chkEpisode').checked){ 
+    if(document.getElementById('chkEpisode').checked){
+        document.getElementById('epiDiv').style.visibility = "visible";
+        document.getElementById('numEpisode').focus();
 
-        const window = new BrowserWindow({
-              height: 180,
-              width: 260,
-              resizable: false,
-              frame: true,
-              webPreferences: {
-                nodeIntegration: true
-              }
-        });
-          
-        window.loadURL('file://' + __dirname +'/episodePrompt.html');
-    }
-    else{
-        fileTools.indexData.StartingEp = 1;
-    }      
+    } else {
+        document.getElementById('epiDiv').style.visibility = "hidden"; 
+        fileTools.Data.StartingEp = 1;
+    }  
 }
 
 function epiDone(){
-    let returnToMain = parseInt(document.getElementById('numEpisode').value);
-    ipcRenderer.send('fromEpiDone',returnToMain);
-    window.close();
+    fileTools.Data.StartingEp = document.getElementById('numEpisode').value;
+    console.log(fileTools.Data.StartingEp);
+    document.getElementById('epiDiv').style.visibility = "hidden"; 
 }
 
 function epiCancel(){
-    fileTools.indexData.StartingEp = 1;
-    window.close();
+    fileTools.Data.StartingEp = 1;
+    document.getElementById('epiDiv').style.visibility = "hidden"; 
 }
-
