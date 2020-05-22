@@ -6,19 +6,14 @@ var test;
 
 module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs};
 
-// get starting episode from episode window if it was sent
-ipcRenderer.send('requestFromIndexForStartEp');
-ipcRenderer.on('responceToIndexForStartep', function(event, Data) {
-test = Data;
-console.log(Data.StartingEp + "this is from the Filetools");
-});
-
-
 function getFileNames(){
     document.getElementById('directoryDisplay').value = Data.Path;
-    Data.OldfileNames = fs.readdirSync(Data.Path);
+    let dirents = fs.readdirSync(Data.Path, {withFileTypes: true});
+    // filter out directorys from resaults
+    Data.OldfileNames = dirents
+    .filter(dirent => dirent.isFile())
+    .map(dirent => dirent.name);
     Data.FileType = path.extname(Data.OldfileNames[0]);
-    console.log(Data.OldfileNames);
 }
 
 function RenameFiles(){
@@ -49,7 +44,6 @@ function GenerateNewNames(OldNames,OldNameCount,StartingEp){
         }else{
            NewNames.push(`${Data.Path}/${Data.NameOfShow} - s${SeasonString}e${EpCount}${Data.FileType}`);
         }
-        console.log(EpCount);
         EpCount++;
     }
     return NewNames;

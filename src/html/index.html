@@ -10,31 +10,33 @@
     <input id="directoryDisplay" type="text" readonly/>
   <section id="controls">
     <div id="ShowDiv">
+      <br/>
       <label id="lblShowName">Show Name:</label>
       <input id="txtShowName" type="text"/>
       <br/>
     </div>
-    <div class="toolTip" id="seasonDiv">
+    <div id="seasonDiv">
       <label id="lblSeason">Season:</label>
-      <input id="numSeason" type="number"/>
+      <input id="numSeason" type="number" value="1"/>
       <br/>
     </div>
     <div id="SubsEpicountDiv">
+      <br/>
       <label id="lblSubs" >Subtitle Files?</label>
       <input id="chkSubs" type="checkbox" onclick="subtitlesClick()"/>
       <br/>
-      <label id= lblEpisode>Episode Start Count</label>
-      <input id="chkEpisode" type="checkbox" onclick="epiClick()"/>
+      <label id= lblEpisode title="Start Episode from a differnt count? EX: Start from episode 7">Episode Start Count</label>
+      <input id="chkEpisode" type="checkbox" onclick="epiClick()" />
       <br/>
       <br/>
     </div>
     <div id="controlsInformationDiv">
-      <button id="btnRefreshList" type="button" onclick="refreshList()">Refresh List</button>
+      <button id="btnRefreshList" type="button" onclick="refreshList()" title="Just a sanity check. It will show you the order it wil rename the files.">Refresh List</button>
       <br/>
       <br/>
       <button id="btnRename" type="button" onclick="rename()">Rename</button>
       <br/>
-      <label id="lblSubInfo">Pressing rename will rename ALL files in directory. Please separate subtitles into a separate directory</label>
+      <!-- <label id="lblSubInfo">Pressing rename will rename ALL files in directory. Please separate subtitles into a separate directory</label> -->
       </div>
   </section>
   <aside id="fileList">

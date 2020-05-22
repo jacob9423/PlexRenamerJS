@@ -27,8 +27,8 @@ function clearData(ClearDirectory){
             NumOfFiles = 0;
             NameOfShow = "Please enter show name";
             SubLang = null;
-            Season = 0;
-            SubLangBool = false;
+            Season = 1;
+            StartingEp = 1;
         }
 module.exports={OldfileNames, NewFileNames, Path, InitalPath, FileType, NumOfFiles, NameOfShow, Season, SubLang, NoPath, FirstRun, StartingEp,SubLangBool,clearData};
     

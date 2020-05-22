@@ -11,8 +11,10 @@ function createWindow () {
       nodeIntegration: true
     }
   })
+  mainWindow.removeMenu();
   mainWindow.loadFile('./src/html/index.html');
 }
+
 app.whenReady().then(createWindow);
 
 

@@ -58,8 +58,8 @@
 /* from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_vertical_menu_scroll */
 .vertical-menu {
     float: right;
-    width: 80%;
-    height: 395px;
+    width: 84%;
+    height: 410px;
     overflow-y: auto;
   }
   

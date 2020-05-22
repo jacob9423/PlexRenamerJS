@@ -22,15 +22,12 @@ function rename(){
     } else if(fileTools.Data.OldfileNames.length != 0){
         fileTools.Data.clearData(true);
     }
-
-    // if(document.getElementById('chkEpisode').checked){
-    //     fileTools.Data.StartingEp = document.getElementById('numEpisode').value;
-    // }
-
+  
     CheckIfNoPath();
+
     GetShowData();
 
-
+    // logic for renaming files. Checks if subtiles are checked and if not rename files the normal way
     if (document.getElementById('chkSubs').checked){
         if(!document.getElementById('txtSubLang').value){
             fileTools.Data.SubLang = document.getElementById('txtSubLang').value;
@@ -83,7 +80,6 @@ function displayList(listToDisplay){
         var li = document.createElement("a");
         li.text = listToDisplay;
         document.getElementById('listOfFiles').appendChild(li);
-        console.log("working");
     });
 }
 
@@ -113,13 +109,10 @@ function subtitlesClick(){
 
 function subtitleWindowDone(){
     fileTools.Data.SubLang = document.getElementById('txtSubLang').value;
-    fileTools.Data.SubLangBool = true;
-    console.log(fileTools.Data.SubLang);
     document.getElementById('subDiv').style.visibility = "hidden"; 
 }
 
 function subtitleWindowCancel(){
-    fileTools.Data.SubLangBool = false;
     document.getElementById('subDiv').style.visibility = "hidden"; 
 }
 
@@ -136,7 +129,6 @@ function epiClick(){
 
 function epiDone(){
     fileTools.Data.StartingEp = document.getElementById('numEpisode').value;
-    console.log(fileTools.Data.StartingEp);
     document.getElementById('epiDiv').style.visibility = "hidden"; 
 }
 
