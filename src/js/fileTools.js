@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
-const Data = require('./../js/Data.js');
+const Data = require('./../js/data.js');
 var test;
 
 module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs};

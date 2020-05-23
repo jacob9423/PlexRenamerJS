@@ -7,7 +7,7 @@ const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
 
 
-const fileTools =require('./../js/fileTools.js');
+const fileTools = require('./../js/fileTools.js');
 
 
 let selectedFilePath;
