@@ -59,7 +59,7 @@
 .vertical-menu {
     float: right;
     width: 84%;
-    height: 410px;
+    height: 430px; /* if adding a menu bar change this to 410*/
     overflow-y: auto;
   }
   
