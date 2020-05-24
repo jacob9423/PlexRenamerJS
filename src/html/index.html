@@ -55,23 +55,23 @@
         <a>File 12</a>
       </div>
     </aside>
+    <div id="epiDiv" class="dialog">
+      <p>Starting Episode</p>
+      <p>Please enter the episode to start at</p>
+      <input type="number" id="numEpisode" class="input"/>
+      <br/>
+      <br/>
+      <button id="btnEpiNumDone" onclick="epiDone()">Done</button>
+      <button id="btnEpiNumCancel" onclick="epiCancel()">Cancel</button>
+    </div>
+    <div id="subDiv" class="dialog">
+      <p>Subtitle Language</p>
+      <p>Please enter 3 letter subtitle ID. (Default English)</p>
+      <input type="text" id="txtSubLang" class="input"/>
+      <br/>
+      <br/>
+      <button id="btnSubDone" onclick="subtitleWindowDone()">Done</button>
+      <button id="btnSubCancel" onclick="subtitleWindowCancel()">Cancel</button>
+    </div>
   </body>
-  <div id="epiDiv" class="dialog">
-    <p>Starting Episode</p>
-    <p>Please enter the episode to start at</p>
-    <input type="number" id="numEpisode" class="input"/>
-    <br/>
-    <br/>
-    <button id="btnEpiNumDone" onclick="epiDone()">Done</button>
-    <button id="btnEpiNumCancel" onclick="epiCancel()">Cancel</button>
-  </div>
-  <div id="subDiv" class="dialog">
-    <p>Subtitle Language</p>
-    <p>Please enter 3 letter subtitle ID. (Default English)</p>
-    <input type="text" id="txtSubLang" class="input"/>
-    <br/>
-    <br/>
-    <button id="btnSubDone" onclick="subtitleWindowDone()">Done</button>
-    <button id="btnSubCancel" onclick="subtitleWindowCancel()">Cancel</button>
-  </div>
 </html>
