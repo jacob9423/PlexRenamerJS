@@ -100,39 +100,39 @@ function GetShowData(){
 
 function subtitlesClick(){
     if(document.getElementById('chkSubs').checked){
-        document.getElementById('subDiv').style.visibility = "visible";
+        document.getElementById('subDiv').style.display = "block";
         document.getElementById('txtSubLang').focus();
     } else {
-        document.getElementById('subDiv').style.visibility = "hidden"; 
+        document.getElementById('subDiv').style.display = "none"; 
     }  
 }
 
 function subtitleWindowDone(){
     fileTools.Data.SubLang = document.getElementById('txtSubLang').value;
-    document.getElementById('subDiv').style.visibility = "hidden"; 
+    document.getElementById('subDiv').style.display = "none"; 
 }
 
 function subtitleWindowCancel(){
-    document.getElementById('subDiv').style.visibility = "hidden"; 
+    document.getElementById('subDiv').style.display = "none"; 
 }
 
 function epiClick(){
     if(document.getElementById('chkEpisode').checked){
-        document.getElementById('epiDiv').style.visibility = "visible";
+        document.getElementById('epiDiv').style.display = "block";
         document.getElementById('numEpisode').focus();
 
     } else {
-        document.getElementById('epiDiv').style.visibility = "hidden"; 
+        document.getElementById('epiDiv').style.display = "none"; 
         fileTools.Data.StartingEp = 1;
     }  
 }
 
 function epiDone(){
     fileTools.Data.StartingEp = document.getElementById('numEpisode').value;
-    document.getElementById('epiDiv').style.visibility = "hidden"; 
+    document.getElementById('epiDiv').style.display = "none"; 
 }
 
 function epiCancel(){
     fileTools.Data.StartingEp = 1;
-    document.getElementById('epiDiv').style.visibility = "hidden"; 
+    document.getElementById('epiDiv').style.display = "none"; 
 }
