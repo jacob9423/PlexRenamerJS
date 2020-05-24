@@ -1,3 +1,8 @@
+*{
+    /* A superior sizing method, more about that here" */
+    /* https://www.w3schools.com/css/css3_box-sizing.asp */
+    box-sizing: border-box;
+}
 #main-container, #top-header{
     display: flex;
 }
@@ -36,35 +41,23 @@
     width: 100px;
 }
 
-#epiDiv{
+.dialog{
     visibility: hidden;
-    padding: 25px;
-    margin-bottom: 80px;
-    margin-left: 230px;
-    margin-top: 80px;
     position: fixed; /* Stay in place */
+    top:0;
+    left: 0;
     z-index: 8888; /* Sit on top */ 
-    width: 30%;
-    height: 35%; 
+    width: 100vw;
+    height: 100vh; 
+    padding: 10%;
+    background-color: rgb(0,0,0,0.2);
+}
+.dialog > .dialog-content{
     background-color: rgb(255, 255, 255);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);
+    padding: 20px;
 }
 
-#subDiv{
-    visibility: hidden;
-    padding: 25px;
-    margin-bottom: 80px;
-    margin-left: 230px;
-    margin-top: 80px;
-    position: fixed; /* Stay in place */
-    z-index: 8888; /* Sit on top */ 
-    width: 30%;
-    height: 35%; 
-    background-color: rgb(255, 255, 255);
-}
-.dialog{
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);
-    border-radius: 2px;
-}
 
 #fileList{
     width: 85%;
