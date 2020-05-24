@@ -55,27 +55,64 @@
     height: 35%; 
     background-color: rgb(255, 255, 255);
 }
+.dialog{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);
+    border-radius: 2px;
+}
 /* from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_vertical_menu_scroll */
 .vertical-menu {
     float: right;
     width: 84%;
     height: 430px; /* if adding a menu bar change this to 410*/
     overflow-y: auto;
-  }
+}
   
-  .vertical-menu a {
-    background-color: #eee;
-    color: black;
-    display: block;
-    padding: 12px;
-    text-decoration: none;
-  }
-  
-  .vertical-menu a:hover {
-    background-color: #ccc;
-  }
-  
-  .vertical-menu a.active {
-    background-color: #4CAF50;
+.vertical-menu a {
+background-color: #eee;
+color: black;
+display: block;
+padding: 12px;
+text-decoration: none;
+}
+
+.vertical-menu a:hover {
+background-color: #ccc;
+}
+
+.vertical-menu a.active {
+background-color: #4CAF50;
+color: white;
+}
+
+
+
+.btn{
+    background-color:#2196f3; 
     color: white;
-  }
+    border: none;
+    border-radius: 2px;
+    height: 30px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);
+
+    transition: .3s ease-out;
+}
+.btn:hover{
+    background-color:#2196f3; 
+    cursor: pointer;
+}
+
+.input{
+    background-color:white; 
+    color: black;
+    border: none;
+    border-radius: 2px;
+    height: 30px;
+    /* box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2); */
+    border-bottom: solid 1px#607d8b;
+
+    transition: .3s ease-out;
+}
+.input:hover{
+    background-color:rgb(233, 233, 233); 
+    cursor: text;
+}
