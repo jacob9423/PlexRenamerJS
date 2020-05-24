@@ -14,32 +14,34 @@
     <main id="main-container">
       <section id="controls">
         <div id="ShowDiv">
-          <br/>
-          <label id="lblShowName">Show Name:</label>
-          <input id="txtShowName" class="input" type="text"/>
-          <br/>
+          <p>
+            <label id="lblShowName">Show Name:</label>
+            <input id="txtShowName" class="input" type="text"/>
+          </p>
         </div>
         <div id="seasonDiv">
-          <label id="lblSeason">Season:</label>
-          <input id="numSeason" class="input" type="number" value="1"/>
-          <br/>
+          <p>
+            <label id="lblSeason">Season:</label>
+            <input id="numSeason" class="input" type="number" value="1"/>
+          </p>
         </div>
         <div id="SubsEpicountDiv">
-          <br/>
-          <label id="lblSubs" >Subtitle Files?</label>
-          <input id="chkSubs" type="checkbox" onclick="subtitlesClick()"/>
-          <br/>
-          <label id= lblEpisode title="Start Episode from a differnt count? EX: Start from episode 7">Episode Start Count</label>
-          <input id="chkEpisode" type="checkbox" onclick="epiClick()" />
-          <br/>
-          <br/>
+          <p>
+            <label id="lblSubs" >Subtitle Files?</label>
+            <input id="chkSubs" type="checkbox" onclick="subtitlesClick()"/>
+          </p>
+          <p>
+            <label id= lblEpisode title="Start Episode from a differnt count? EX: Start from episode 7">Episode Start Count</label>
+            <input id="chkEpisode" type="checkbox" onclick="epiClick()" />
+          </p>
         </div>
         <div id="controlsInformationDiv">
-          <button id="btnRefreshList" class="btn" type="button" onclick="refreshList()" title="Just a sanity check. It will show you the order it wil rename the files.">Refresh List</button>
-          <br/>
-          <br/>
-          <button id="btnRename" class="btn" type="button" onclick="rename()">Rename</button>
-          <br/>
+          <p>
+            <button id="btnRefreshList" class="btn" type="button" onclick="refreshList()" title="Just a sanity check. It will show you the order it wil rename the files.">Refresh List</button>
+          </p>
+          <p>
+            <button id="btnRename" class="btn" type="button" onclick="rename()">Rename</button>
+          </p>
           <!-- <label id="lblSubInfo">Pressing rename will rename ALL files in directory. Please separate subtitles into a separate directory</label> -->
           </div>
       </section>
@@ -65,20 +67,24 @@
     <div id="epiDiv" class="dialog">
       <p>Starting Episode</p>
       <p>Please enter the episode to start at</p>
-      <input type="number" id="numEpisode" class="input"/>
-      <br/>
-      <br/>
-      <button id="btnEpiNumDone" onclick="epiDone()">Done</button>
-      <button id="btnEpiNumCancel" onclick="epiCancel()">Cancel</button>
+      <p>
+        <input type="number" id="numEpisode" class="input"/>
+      </p>
+      <p>
+        <button id="btnEpiNumDone" onclick="epiDone()">Done</button>
+        <button id="btnEpiNumCancel" onclick="epiCancel()">Cancel</button>
+      </p>
     </div>
     <div id="subDiv" class="dialog">
       <p>Subtitle Language</p>
       <p>Please enter 3 letter subtitle ID. (Default English)</p>
-      <input type="text" id="txtSubLang" class="input"/>
-      <br/>
-      <br/>
-      <button id="btnSubDone" onclick="subtitleWindowDone()">Done</button>
-      <button id="btnSubCancel" onclick="subtitleWindowCancel()">Cancel</button>
+      <p>
+        <input type="text" id="txtSubLang" class="input"/>
+      </p>
+      <p>
+        <button id="btnSubDone" onclick="subtitleWindowDone()">Done</button>
+        <button id="btnSubCancel" onclick="subtitleWindowCancel()">Cancel</button>
+      </p>
     </div>
   </body>
 </html>
