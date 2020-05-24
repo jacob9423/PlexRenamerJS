@@ -1,5 +1,6 @@
 {
   "name": "PlexRenamerJS",
+  "description": "An App to rename video files in plex format",
   "version": "1.0.1",
   "main": "main.js",
   "scripts": {
