@@ -12,7 +12,7 @@ const fileTools = require('./../js/fileTools.js');
 
 let selectedFilePath;
 
-function rename(){
+async function rename(){
     // to check if ther user is running this program a secound time. 
     // If so they could have already picked a directory and would like to use the one they already selected
     if(fileTools.Data.FirstRun){
@@ -23,7 +23,7 @@ function rename(){
         fileTools.Data.clearData(true);
     }
   
-    CheckIfNoPath();
+    await CheckIfNoPath();
 
     GetShowData();
 
@@ -63,9 +63,9 @@ async function OpenFolderDialog(){
     fileTools.Data.NoPath = false; 
 }
 
-function CheckIfNoPath(){
+async function CheckIfNoPath(){
     if (fileTools.Data.NoPath){
-        OpenFolderDialog();
+       await OpenFolderDialog();
     }
 }
 
