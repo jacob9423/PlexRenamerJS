@@ -65,7 +65,7 @@ async function OpenFolderDialog(){
 
 async function CheckIfNoPath(){
     if (fileTools.Data.NoPath){
-        OpenFolderDialog();
+       await OpenFolderDialog();
     }
 }
 
