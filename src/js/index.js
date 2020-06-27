@@ -26,6 +26,7 @@ async function rename(){
     await CheckIfNoPath();
 
     GetShowData();
+    fileTools.CreateOrWriteConfig();
 
     // logic for renaming files. Checks if subtiles are checked and if not rename files the normal way
     if (document.getElementById('chkSubs').checked){

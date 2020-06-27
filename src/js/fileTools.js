@@ -2,9 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
 const Data = require('./../js/data.js');
-var test;
+const data = require('./../js/data.js');
+const Home = require('os').homedir();
 
-module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs};
+// variables for use in fileTools.js 
+var DirPath = Home + '/Documents/PlexRenamerJSConfig.json';
+var json;
+
+module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs,CreateOrWriteConfig};
 
 function getFileNames(){
     document.getElementById('directoryDisplay').value = Data.Path;
@@ -21,11 +26,11 @@ function RenameFiles(){
     
     for (let i = 0; i < Data.OldfileNames.length; i++){
         oldFiles.push(Data.Path + "/" + Data.OldfileNames[i]);
-        }     
-        for (let i = 0; i < Data.OldfileNames.length; i++){
-            fs.renameSync(oldFiles[i], Data.NewFileNames[i]);
-        }
+    }     
+    for (let i = 0; i < Data.OldfileNames.length; i++){
+        fs.renameSync(oldFiles[i], Data.NewFileNames[i]);
     }
+}
 
 function GenerateNewNames(OldNames,OldNameCount,StartingEp){
     let NewNames = [];
@@ -55,13 +60,11 @@ function GenerateNewNamesForSubs(OldNames,OldNameCount,StartingEp){
     let EpCount = StartingEp;
 
     if (!Data.SubLang){
-        Data.SubLang = "eng";
-    }
-
-    if (Data.Season < 10){
-        SeasonString = "0" + Data.Season;
-    } else {
-        SeasonString = Data.Season;
+        if (Data.Season < 10){
+            SeasonString = "0" + Data.Season;
+        } else {
+            SeasonString = Data.Season;
+        }
     }
 
     for (let i = 0; i < OldNameCount; i++){
@@ -73,4 +76,28 @@ function GenerateNewNamesForSubs(OldNames,OldNameCount,StartingEp){
         EpCount++;
     }
     return NewNames;
+}
+
+function CreateConfigFileIfNone(){
+    fs.writeFileSync(DirPath,{overwrite: false});
+}
+
+function LoadConfig(){
+    let file = fs.readFileSync(DirPath);
+    json = JSON.parse(file);
+    Data.InitalPath = json.strDir;
+}
+
+function CreateOrWriteConfig(){
+    let jsonData = {
+        strDir: `${Data.Path}`
+    }
+
+    if(fs.existsSync(DirPath)){
+        let jsonString = JSON.stringify(jsonData);
+        fs.writeFileSync(DirPath,jsonString);
+    }
+    else{
+        CreateConfigFileIfNone();
+    }
 }
