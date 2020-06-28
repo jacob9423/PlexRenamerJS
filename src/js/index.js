@@ -4,13 +4,18 @@ const remote = require('electron').remote;
 const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const path = require('path');
-const BrowserWindow = remote.BrowserWindow;
+const Home = require('os').homedir();
+
 
 
 const fileTools = require('./../js/fileTools.js');
+const { Data } = require('./../js/fileTools.js');
 
 
 let selectedFilePath;
+
+fileTools.LoadConfig();
+console.log("Loading Config");
 
 async function rename(){
     // to check if ther user is running this program a secound time. 
@@ -57,7 +62,7 @@ async function rename(){
 }
 
 async function OpenFolderDialog(){    
-    let promise = await (dialog.showOpenDialog({ properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
+    let promise = await (dialog.showOpenDialog({defaultPath: `${Data.InitalPath}` , properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
     fileTools.Data.Path = selectedFilePath[0];
     fileTools.getFileNames();
     displayList(fileTools.Data.OldfileNames);  
