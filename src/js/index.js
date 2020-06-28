@@ -14,8 +14,11 @@ const { Data } = require('./../js/fileTools.js');
 
 let selectedFilePath;
 
-fileTools.LoadConfig();
-console.log("Loading Config");
+if(fileTools.CheckConfig()){
+    fileTools.LoadConfig();
+}else{
+    fileTools.CreateOrWriteConfig();
+}
 
 async function rename(){
     // to check if ther user is running this program a secound time. 

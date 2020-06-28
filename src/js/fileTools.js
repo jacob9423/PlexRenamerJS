@@ -9,7 +9,7 @@ const Home = require('os').homedir();
 var DirPath = Home + '/Documents/PlexRenamerJSConfig.json';
 var json;
 
-module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs,CreateOrWriteConfig,LoadConfig};
+module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs,CreateOrWriteConfig,LoadConfig,CheckConfig};
 
 function getFileNames(){
     document.getElementById('directoryDisplay').value = Data.Path;
@@ -103,5 +103,13 @@ function CreateOrWriteConfig(){
     }
     else{
         CreateConfigFileIfNone();
+    }
+}
+
+function CheckConfig(){
+    if(fs.existsSync(DirPath)){
+        return true;
+    }else{
+        return false;
     }
 }
