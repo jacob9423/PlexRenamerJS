@@ -2,9 +2,15 @@ const fs = require('fs');
 const path = require('path');
 const BrowserWindow = remote.BrowserWindow;
 const Data = require('./../js/data.js');
-var test;
+const data = require('./../js/data.js');
+const Home = require('os').homedir();
 
-module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs};
+// variables for use in fileTools.js 
+var DirPath = Home + '/Documents/PlexRenamerJSConfig.json';
+var DefaultPath = Home + '/Documents';
+var json;
+
+module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs,CreateOrWriteConfig,LoadConfig,CheckConfig};
 
 function getFileNames(){
     document.getElementById('directoryDisplay').value = Data.Path;
@@ -21,11 +27,11 @@ function RenameFiles(){
     
     for (let i = 0; i < Data.OldfileNames.length; i++){
         oldFiles.push(Data.Path + "/" + Data.OldfileNames[i]);
-        }     
-        for (let i = 0; i < Data.OldfileNames.length; i++){
-            fs.renameSync(oldFiles[i], Data.NewFileNames[i]);
-        }
+    }     
+    for (let i = 0; i < Data.OldfileNames.length; i++){
+        fs.renameSync(oldFiles[i], Data.NewFileNames[i]);
     }
+}
 
 function GenerateNewNames(OldNames,OldNameCount,StartingEp){
     let NewNames = [];
@@ -73,4 +79,52 @@ function GenerateNewNamesForSubs(OldNames,OldNameCount,StartingEp){
         EpCount++;
     }
     return NewNames;
+}
+
+function CreateConfigFileIfNone(){
+    fs.writeFileSync(DirPath,{overwrite: false});
+}
+
+function LoadConfig(){
+    let file = fs.readFileSync(DirPath);
+    json = JSON.parse(file);
+    if(!json.strDir){
+        Data.InitalPath = DirPath;
+    }else{
+        Data.InitalPath = json.strDir;
+    }
+}
+
+function CreateOrWriteConfig(){
+    let jsonData 
+// Create jasondata with the current path if sleected. If not write the default path
+    if(Data.Path){
+        jsonData = {
+            strDir: `${Data.Path}`
+        }
+    }else{
+        jsonData = {
+            strDir: `${DefaultPath}`
+        }
+        Data.InitalPath = DefaultPath;
+    }
+         
+    var jsonString = JSON.stringify(jsonData);
+
+    if(fs.existsSync(DirPath)){
+        
+        fs.writeFileSync(DirPath,jsonString);
+    }
+    else{
+        CreateConfigFileIfNone();
+        fs.writeFileSync(DirPath,jsonString);
+    }
+}
+
+function CheckConfig(){
+    if(fs.existsSync(DirPath)){
+        return true;
+    }else{
+        return false;
+    }
 }
