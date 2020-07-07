@@ -14,11 +14,8 @@ const { Data } = require('./../js/fileTools.js');
 
 let selectedFilePath;
 
-if(fileTools.CheckConfig()){
-    fileTools.LoadConfig();
-}else{
-    fileTools.CreateOrWriteConfig();
-}
+ConfigCheck();
+
 
 async function rename(){
     // to check if ther user is running this program a secound time. 
@@ -67,6 +64,8 @@ async function rename(){
 async function OpenFolderDialog(){    
     let promise = await (dialog.showOpenDialog({defaultPath: `${Data.InitalPath}` , properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
     fileTools.Data.Path = selectedFilePath[0];
+    //set InitialPath after file is selected to be used for directory remembering
+    fileTools.Data.InitalPath = fileTools.Data.Path;
     fileTools.getFileNames();
     displayList(fileTools.Data.OldfileNames);  
     fileTools.Data.NoPath = false; 
@@ -104,6 +103,14 @@ function GetShowData(){
     catch{
         dialog.showErrorBox('Renaming folders are we?','Are you trying to rename a Folder without video files in it? Please select another folder');
         OpenFolderDialog();
+    }
+}
+
+function ConfigCheck(){
+    if(fileTools.CheckConfig()){
+        fileTools.LoadConfig();
+    }else{
+        fileTools.CreateOrWriteConfig();
     }
 }
 

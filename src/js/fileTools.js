@@ -7,6 +7,7 @@ const Home = require('os').homedir();
 
 // variables for use in fileTools.js 
 var DirPath = Home + '/Documents/PlexRenamerJSConfig.json';
+var DefaultPath = Home + '/Documents';
 var json;
 
 module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs,CreateOrWriteConfig,LoadConfig,CheckConfig};
@@ -60,11 +61,13 @@ function GenerateNewNamesForSubs(OldNames,OldNameCount,StartingEp){
     let EpCount = StartingEp;
 
     if (!Data.SubLang){
-        if (Data.Season < 10){
-            SeasonString = "0" + Data.Season;
-        } else {
-            SeasonString = Data.Season;
-        }
+        Data.SubLang = "eng";
+    }
+
+    if (Data.Season < 10){
+        SeasonString = "0" + Data.Season;
+    } else {
+        SeasonString = Data.Season;
     }
 
     for (let i = 0; i < OldNameCount; i++){
@@ -93,16 +96,28 @@ function LoadConfig(){
 }
 
 function CreateOrWriteConfig(){
-    let jsonData = {
-        strDir: `${Data.Path}`
+    let jsonData 
+// Create jasondata with the current path if sleected. If not write the default path
+    if(Data.Path){
+        jsonData = {
+            strDir: `${Data.Path}`
+        }
+    }else{
+        jsonData = {
+            strDir: `${DefaultPath}`
+        }
+        Data.InitalPath = DefaultPath;
     }
+         
+    var jsonString = JSON.stringify(jsonData);
 
     if(fs.existsSync(DirPath)){
-        let jsonString = JSON.stringify(jsonData);
+        
         fs.writeFileSync(DirPath,jsonString);
     }
     else{
         CreateConfigFileIfNone();
+        fs.writeFileSync(DirPath,jsonString);
     }
 }
 
