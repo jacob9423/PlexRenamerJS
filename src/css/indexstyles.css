@@ -96,7 +96,7 @@
     border-radius: 2px;
     height: 30px;
     width: 100%;
-    border-bottom: solid 1px#607d8b;
+    border-bottom: solid 1px #607d8b;
 
     transition: .3s ease-out;
 }
