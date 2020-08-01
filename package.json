@@ -3,6 +3,19 @@
   "description": "An App to rename video files in plex format",
   "version": "1.0.10",
   "main": "main.js",
+  "author": {
+    "email": "sammyspammerson@gmail.com"
+  },
+  "build": {
+    "appId": "--",
+    "linux": {
+      "icon": "./build",
+      "target": [
+        "pacman",
+        "AppImage"
+      ]
+    }
+  },
   "scripts": {
     "start": "electron ."
   },
