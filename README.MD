@@ -24,3 +24,8 @@ Subtitles:
 Example - s01e01.eng.ass
 
 When renaming subtitle files eng is the default language so if you type nothing into it it will automaticly default to english.
+
+# Screenshot
+(Screenshot shows text files. Those are just my test files. It keeps whatever ext the file has.)
+![PlexRenamerJS Screenshot](./PlexrenamerJS.png)
+
