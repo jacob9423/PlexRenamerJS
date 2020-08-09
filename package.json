@@ -9,10 +9,10 @@
   "build": {
     "appId": "--",
     "linux": {
-      "icon": "./build",
       "target": [
         "pacman",
-        "AppImage"
+        "AppImage",
+        "deb"
       ]
     }
   },
