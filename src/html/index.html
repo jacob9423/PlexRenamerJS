@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link href="../css/indexstyles.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../js/index.js"></script>
+    <script type="text/javascript" src="../js/anime.js"></script>
   </head>
   <body>
     <header id="top-header">
@@ -43,6 +44,10 @@
             <button id="btnRename" class="btn" type="button" onclick="rename()">Rename</button>
           </p>
           <!-- <label id="lblSubInfo">Pressing rename will rename ALL files in directory. Please separate subtitles into a separate directory</label> -->
+          <p>
+            <!-- Button to Convert Romaji to english title for anime. Button can be changed to Convert if any other media types are ever added and then a diolog would pop up to choose-->
+            <button id="btnConvert" class="btn" type="button" onclick="convert()">Convert Romaji</button>
+          </p>
           </div>
       </section>
 
