@@ -12,27 +12,27 @@ query ($anime: String) {
 }
 `;
 
-
 async function convert(){
   let romajiVar = document.getElementById('txtShowName').value;
   let englishName;
   englishName = await convertRomaji(romajiVar);
 
-
+  if(englishName == null){
+    // do nothing - keep the old name
+  } else{
+    document.getElementById('txtShowName').value = englishName;
+  }
 }
-
 // Function to convert Romaji to enlish. For anime.
 // Current issues: It returns a promise insted of the data
 async function convertRomaji(romaji) {
     if (!romaji) {
         return "No string provided"
     }
-
     // varible to provide the graphql query
     AnimeVaribles = {
       anime: romaji
     }
-
     //getting data from anilist
     var url = 'https://graphql.anilist.co',
         options = {
@@ -49,13 +49,9 @@ async function convertRomaji(romaji) {
  await fetch(url,options).then(handleResponse)
                     .then(handleData)
                     .then(handleError);
-
 //return returnedData;
 return animeData.data.Media.title.english;
-
 }
-
-
 // Functions for promise
 function handleResponse(response) {
   return response.json().then(function (json) {
@@ -66,8 +62,9 @@ function handleResponse(response) {
 function handleData(data) {
   animeData = data;
 }
-
-// should look into alerting if there is an actual error
+// will log to console if there is an error
 function handleError(error) {
-  console.log(error);
+  if(error){
+    console.log(error);
+  }
 }
