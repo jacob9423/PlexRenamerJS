@@ -1,34 +1,34 @@
 
-var OldfileNames = [];
-var NewFileNames = [];
-var Path;
-var InitalPath;
-var FileType;
-var NumOfFiles;
-var NameOfShow;
-var Season;
-var SubLang;
-var SubLangBool = false;
-var NoPath = true;
-var FirstRun = true;
-var StartingEp = 1;
+var oldfileNames = [];
+var newFileNames = [];
+var path;
+var initalPath;
+var fileType;
+var numOfFiles;
+var nameOfShow;
+var season;
+var subLang;
+var subLangBool = false;
+var noPath = true;
+var firstRun = true;
+var startingEp = 1;
 
-function clearData(ClearDirectory){
-            if (!ClearDirectory){
+function clearData(clearDirectory){
+            if (!clearDirectory){
                 // no need to change path
-                NoPath = false;
+                noPath = false;
             }else{
-                Path = "null";
-                NoPath = true;
+                path = "null";
+                noPath = true;
             }
-            OldFileNames = [];
-            NewFileNames = [];
-            FileType = "null";
-            NumOfFiles = 0;
-            NameOfShow = "Please enter show name";
-            SubLang = null;
-            Season = 1;
-            StartingEp = 1;
+            oldFileNames = [];
+            newFileNames = [];
+            fileType = "null";
+            numOfFiles = 0;
+            nameOfShow = "Please enter show name";
+            subLang = null;
+            season = 1;
+            startingEp = 1;
         }
-module.exports={OldfileNames, NewFileNames, Path, InitalPath, FileType, NumOfFiles, NameOfShow, Season, SubLang, NoPath, FirstRun, StartingEp,SubLangBool,clearData};
+module.exports={oldfileNames, newFileNames, path, initalPath, fileType, numOfFiles, nameOfShow, season, subLang, noPath, firstRun, startingEp,subLangBool,clearData};
     

@@ -4,43 +4,43 @@ const remote = require('electron').remote;
 const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const path = require('path');
-const Home = require('os').homedir();
+const home = require('os').homedir();
 
 
 
 const fileTools = require('./../js/fileTools.js');
-const { Data } = require('./../js/fileTools.js');
+//const { data } = require('./../js/fileTools.js');
 
 
 let selectedFilePath;
 
-ConfigCheck();
+configCheck();
 
 
 async function rename(){
     // to check if ther user is running this program a secound time. 
     // If so they could have already picked a directory and would like to use the one they already selected
-    if(fileTools.Data.FirstRun){
+    if(fileTools.data.firstRun){
         //get out of if statements and go on and run the program
-    } else if (fileTools.Data.OldfileNames.length != 0 && !fileTools.Data.NoPath){
-        fileTools.Data.clearData(false);
-    } else if(fileTools.Data.OldfileNames.length != 0){
-        fileTools.Data.clearData(true);
+    } else if (fileTools.data.oldfileNames.length != 0 && !fileTools.data.noPath){
+        fileTools.data.clearData(false);
+    } else if(fileTools.data.oldfileNames.length != 0){
+        fileTools.data.clearData(true);
     }
   
-    await CheckIfNoPath();
+    await checkIfNoPath();
 
-    GetShowData();
-    fileTools.CreateOrWriteConfig();
+    getShowData();
+    fileTools.createOrWriteConfig();
 
     // logic for renaming files. Checks if subtiles are checked and if not rename files the normal way
     if (document.getElementById('chkSubs').checked){
         if(!document.getElementById('txtSubLang').value){
-            fileTools.Data.SubLang = document.getElementById('txtSubLang').value;
+            fileTools.data.subLang = document.getElementById('txtSubLang').value;
         }
-        fileTools.Data.NewFileNames = fileTools.GenerateNewNamesForSubs(fileTools.Data.OldFileNames, fileTools.Data.OldfileNames.length, fileTools.Data.StartingEp);
+        fileTools.data.newFileNames = fileTools.generateNewNamesForSubs(fileTools.data.oldfileNames.length, fileTools.data.startingEp);
     } else{
-        fileTools.Data.NewFileNames = fileTools.GenerateNewNames(fileTools.Data.OldFileNames, fileTools.Data.OldfileNames.length, fileTools.Data.StartingEp);
+        fileTools.data.newFileNames = fileTools.generateNewNames(fileTools.data.oldfileNames.length, fileTools.data.startingEp);
     }
 
     let confrimBoxOptions = {
@@ -53,33 +53,33 @@ async function rename(){
     }
     let confirmBox = dialog.showMessageBoxSync(null,confrimBoxOptions);
     if (confirmBox == 1){
-        fileTools.RenameFiles();
+        fileTools.renameFiles();
         fileTools.getFileNames();
-        displayList(fileTools.Data.NewFileNames);
-        fileTools.Data.NoPath = true;
+        displayList(fileTools.data.newFileNames);
+        fileTools.data.noPath = true;
     }
-    fileTools.Data.FirstRun = false;   
+    fileTools.data.firstRun = false;   
 }
 
-async function OpenFolderDialog(){    
-    let promise = await (dialog.showOpenDialog({defaultPath: `${Data.InitalPath}` , properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
-    fileTools.Data.Path = selectedFilePath[0];
+async function openFolderDialog(){    
+    let promise = await (dialog.showOpenDialog({defaultPath: `${fileTools.data.initalPath}` , properties: ['openDirectory']}).then((data) => {selectedFilePath=data.filePaths;}));
+    fileTools.data.path = selectedFilePath[0];
     //set InitialPath after file is selected to be used for directory remembering
-    fileTools.Data.InitalPath = fileTools.Data.Path;
+    fileTools.data.initalPath = fileTools.data.path;
     fileTools.getFileNames();
-    displayList(fileTools.Data.OldfileNames);  
-    fileTools.Data.NoPath = false; 
+    displayList(fileTools.data.oldfileNames);  
+    fileTools.data.noPath = false; 
 }
 
-async function CheckIfNoPath(){
-    if (fileTools.Data.NoPath){
-       await OpenFolderDialog();
+async function checkIfNoPath(){
+    if (fileTools.data.noPath){
+       await openFolderDialog();
     }
 }
 
 function refreshList(){
     fileTools.getFileNames();
-    displayList(fileTools.Data.OldfileNames);
+    displayList(fileTools.data.oldfileNames);
 }
 
 function displayList(listToDisplay){
@@ -91,26 +91,26 @@ function displayList(listToDisplay){
     });
 }
 
-function GetShowData(){
-    fileTools.Data.NameOfShow = document.getElementById('txtShowName').value;
-    fileTools.Data.Season = document.getElementById('numSeason').value;
+function getShowData(){
+    fileTools.data.nameOfShow = document.getElementById('txtShowName').value;
+    fileTools.data.season = document.getElementById('numSeason').value;
     fileTools.getFileNames();
 
     // to fix a bug where if the user picks a folder with only folders in it the program will error out.
     try{
-        fileTools.Data.FileType = path.extname(fileTools.Data.OldfileNames[0]);
+        fileTools.data.fileType = path.extname(fileTools.data.oldfileNames[0]);
     }
     catch{
         dialog.showErrorBox('Renaming folders are we?','Are you trying to rename a Folder without video files in it? Please select another folder');
-        OpenFolderDialog();
+        openFolderDialog();
     }
 }
 
-function ConfigCheck(){
-    if(fileTools.CheckConfig()){
-        fileTools.LoadConfig();
+function configCheck(){
+    if(fileTools.checkConfig()){
+        fileTools.loadConfig();
     }else{
-        fileTools.CreateOrWriteConfig();
+        fileTools.createOrWriteConfig();
     }
 }
 
@@ -124,7 +124,7 @@ function subtitlesClick(){
 }
 
 function subtitleWindowDone(){
-    fileTools.Data.SubLang = document.getElementById('txtSubLang').value;
+    fileTools.data.subLang = document.getElementById('txtSubLang').value;
     document.getElementById('subDiv').style.display = "none"; 
 }
 
@@ -139,16 +139,16 @@ function epiClick(){
 
     } else {
         document.getElementById('epiDiv').style.display = "none"; 
-        fileTools.Data.StartingEp = 1;
+        fileTools.data.startingEp = 1;
     }  
 }
 
 function epiDone(){
-    fileTools.Data.StartingEp = document.getElementById('numEpisode').value;
+    fileTools.data.startingEp = document.getElementById('numEpisode').value;
     document.getElementById('epiDiv').style.display = "none"; 
 }
 
 function epiCancel(){
-    fileTools.Data.StartingEp = 1;
+    fileTools.data.startingEp = 1;
     document.getElementById('epiDiv').style.display = "none"; 
 }

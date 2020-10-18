@@ -1,128 +1,126 @@
 const fs = require('fs');
 const path = require('path');
-const BrowserWindow = remote.BrowserWindow;
-const Data = require('./../js/data.js');
 const data = require('./../js/data.js');
-const Home = require('os').homedir();
+const home = require('os').homedir();
 
 // variables for use in fileTools.js 
-var DirPath = Home + '/Documents/PlexRenamerJSConfig.json';
-var DefaultPath = Home + '/Documents';
+var dirPath = home + '/Documents/PlexRenamerJSConfig.json';
+var defaultPath = home + '/Documents';
 var json;
 
-module.exports={Data,getFileNames,RenameFiles,GenerateNewNames,GenerateNewNamesForSubs,CreateOrWriteConfig,LoadConfig,CheckConfig};
+module.exports={data,getFileNames,renameFiles,generateNewNames,generateNewNamesForSubs,createOrWriteConfig,loadConfig,checkConfig};
 
 function getFileNames(){
-    document.getElementById('directoryDisplay').value = Data.Path;
-    let dirents = fs.readdirSync(Data.Path, {withFileTypes: true});
+    document.getElementById('directoryDisplay').value = data.path;
+    let dirents = fs.readdirSync(data.path, {withFileTypes: true});
     // filter out directorys from resaults
-    Data.OldfileNames = dirents
+    data.oldfileNames = dirents
     .filter(dirent => dirent.isFile())
     .map(dirent => dirent.name);
-    Data.FileType = path.extname(Data.OldfileNames[0]);
+    data.fileType = path.extname(data.oldfileNames[0]);
 }
 
-function RenameFiles(){
+function renameFiles(){
     let oldFiles = [];
     
-    for (let i = 0; i < Data.OldfileNames.length; i++){
-        oldFiles.push(Data.Path + "/" + Data.OldfileNames[i]);
+    for (let i = 0; i < data.oldfileNames.length; i++){
+        oldFiles.push(data.path + "/" + data.oldfileNames[i]);
     }     
-    for (let i = 0; i < Data.OldfileNames.length; i++){
-        fs.renameSync(oldFiles[i], Data.NewFileNames[i]);
+    for (let i = 0; i < data.oldfileNames.length; i++){
+        fs.renameSync(oldFiles[i], data.newFileNames[i]);
     }
 }
 
-function GenerateNewNames(OldNames,OldNameCount,StartingEp){
-    let NewNames = [];
-    let EpCount = StartingEp;
-    let SeasonString;
-
-    if (Data.Season < 10){
-        SeasonString = "0" + Data.Season;
+function generateNewNames(oldNameCount,startingEp){
+    let newNames = [];
+    let epCount = startingEp;
+    let seasonString;
+    
+    if (data.season < 10){
+        seasonString = "0" + data.season;
     } else {
-        SeasonString = Data.Season;
+        seasonString = data.season;
     }
-
-    for (let i = 0; i < OldNameCount; i++){
-        if (EpCount < 10){
-           NewNames.push(`${Data.Path}/${Data.NameOfShow} - s${SeasonString}e0${EpCount}${Data.FileType}`);
+    
+    for (let i = 0; i < oldNameCount; i++){
+        if (epCount < 10){
+            newNames.push(`${data.path}/${data.nameOfShow} - s${seasonString}e0${epCount}${data.fileType}`);
         }else{
-           NewNames.push(`${Data.Path}/${Data.NameOfShow} - s${SeasonString}e${EpCount}${Data.FileType}`);
+            newNames.push(`${data.path}/${data.nameOfShow} - s${seasonString}e${epCount}${data.fileType}`);
         }
-        EpCount++;
+        epCount++;
     }
-    return NewNames;
+    return newNames;
 }
 
-function GenerateNewNamesForSubs(OldNames,OldNameCount,StartingEp){
-    let NewNames = [];
-    let SeasonString;
-    let EpCount = StartingEp;
+function generateNewNamesForSubs(oldNameCount,startingEp){
+    let newNames = [];
+    let seasonString;
+    let epCount = startingEp;
 
-    if (!Data.SubLang){
-        Data.SubLang = "eng";
+    if (!data.subLang){
+        data.subLang = "eng";
     }
 
-    if (Data.Season < 10){
-        SeasonString = "0" + Data.Season;
+    if (data.season < 10){
+        seasonString = "0" + data.season;
     } else {
-        SeasonString = Data.Season;
+        seasonString = data.season;
     }
 
-    for (let i = 0; i < OldNameCount; i++){
-        if (EpCount < 10){
-            NewNames.push(`${Data.Path}/${Data.NameOfShow} - s${SeasonString}e0${EpCount}.${Data.SubLang}${Data.FileType}`);
+    for (let i = 0; i < oldNameCount; i++){
+        if (epCount < 10){
+            newNames.push(`${data.path}/${data.nameOfShow} - s${seasonString}e0${epCount}.${data.subLang}${data.fileType}`);
         } else{
-            NewNames.push(`${Data.Path}/${Data.NameOfShow} - s${SeasonString}e${EpCount}.${Data.SubLang}${Data.FileType}`);
+            newNames.push(`${data.path}/${data.nameOfShow} - s${seasonString}e${epCount}.${data.subLang}${data.fileType}`);
         }
-        EpCount++;
+        epCount++;
     }
-    return NewNames;
+    return newNames;
 }
 
-function CreateConfigFileIfNone(){
-    fs.writeFileSync(DirPath,{overwrite: false});
+function createConfigFileIfNone(){
+    fs.writeFileSync(dirPath,{overwrite: false});
 }
 
-function LoadConfig(){
-    let file = fs.readFileSync(DirPath);
+function loadConfig(){
+    let file = fs.readFileSync(dirPath);
     json = JSON.parse(file);
     if(!json.strDir){
-        Data.InitalPath = DirPath;
+        data.initalPath = dirPath;
     }else{
-        Data.InitalPath = json.strDir;
+        data.initalPath = json.strDir;
     }
 }
 
-function CreateOrWriteConfig(){
+function createOrWriteConfig(){
     let jsonData 
 // Create jasondata with the current path if sleected. If not write the default path
-    if(Data.Path){
+    if(data.path){
         jsonData = {
-            strDir: `${Data.Path}`
+            strDir: `${data.path}`
         }
     }else{
         jsonData = {
-            strDir: `${DefaultPath}`
+            strDir: `${defaultPath}`
         }
-        Data.InitalPath = DefaultPath;
+        data.initalPath = defaultPath;
     }
          
     var jsonString = JSON.stringify(jsonData);
 
-    if(fs.existsSync(DirPath)){
+    if(fs.existsSync(dirPath)){
         
-        fs.writeFileSync(DirPath,jsonString);
+        fs.writeFileSync(dirPath,jsonString);
     }
     else{
-        CreateConfigFileIfNone();
-        fs.writeFileSync(DirPath,jsonString);
+        createConfigFileIfNone();
+        fs.writeFileSync(dirPath,jsonString);
     }
 }
 
-function CheckConfig(){
-    if(fs.existsSync(DirPath)){
+function checkConfig(){
+    if(fs.existsSync(dirPath)){
         return true;
     }else{
         return false;
