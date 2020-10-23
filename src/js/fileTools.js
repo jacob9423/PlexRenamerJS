@@ -2,11 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const data = require('./../js/data.js');
 const home = require('os').homedir();
+const isMac = require('os').platform();
 
 // variables for use in fileTools.js 
 var dirPath = home + '/Documents/PlexRenamerJSConfig.json';
 var defaultPath = home + '/Documents';
 var json;
+
 
 module.exports={data,getFileNames,renameFiles,generateNewNames,generateNewNamesForSubs,createOrWriteConfig,loadConfig,checkConfig};
 
@@ -17,6 +19,15 @@ function getFileNames(){
     data.oldfileNames = dirents
     .filter(dirent => dirent.isFile())
     .map(dirent => dirent.name);
+
+    //Check if the platform is mac. If so remove .DS_Store from list
+    if (isMac == "darwin") {
+        console.log(isMac);
+        var index = data.oldfileNames.indexOf(".DS_Store");
+        if (index > -1) {
+            data.oldfileNames.splice(index,1)
+        }
+    }
     data.fileType = path.extname(data.oldfileNames[0]);
 }
 

@@ -11,7 +11,7 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-  mainWindow.removeMenu();
+  //mainWindow.removeMenu();
   mainWindow.loadFile('./src/html/index.html');
 }
 
