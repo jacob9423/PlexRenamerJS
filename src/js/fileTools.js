@@ -16,29 +16,29 @@ function getFileNames(){
     document.getElementById('directoryDisplay').value = data.path;
     let dirents = fs.readdirSync(data.path, {withFileTypes: true});
     // filter out directorys from resaults
-    data.oldfileNames = dirents
+    data.oldFileNames = dirents
     .filter(dirent => dirent.isFile())
     .map(dirent => dirent.name);
 
     //Check if the platform is mac. If so remove .DS_Store from list
     if (isMac == "darwin"){
         console.log(isMac);
-        var index = data.oldfileNames.indexOf(".DS_Store");
+        var index = data.oldFileNames.indexOf(".DS_Store");
         if (index > -1){
-            data.oldfileNames.splice(index,1)
+            data.oldFileNames.splice(index,1)
         }
     }
     //Only get the file type after we know there is no .DS_Store files
-    data.fileType = path.extname(data.oldfileNames[0]);
+    data.fileType = path.extname(data.oldFileNames[0]);
 }
 
 function renameFiles(){
     let oldFiles = [];
     
-    for (let i = 0; i < data.oldfileNames.length; i++){
-        oldFiles.push(data.path + "/" + data.oldfileNames[i]);
+    for (let i = 0; i < data.oldFileNames.length; i++){
+        oldFiles.push(data.path + "/" + data.oldFileNames[i]);
     }     
-    for (let i = 0; i < data.oldfileNames.length; i++){
+    for (let i = 0; i < data.oldFileNames.length; i++){
         fs.renameSync(oldFiles[i], data.newFileNames[i]);
     }
 }

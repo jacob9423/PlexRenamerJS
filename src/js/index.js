@@ -22,9 +22,9 @@ async function rename(){
     // If so they could have already picked a directory and would like to use the one they already selected
     if(fileTools.data.firstRun){
         //get out of if statements and go on and run the program
-    } else if (fileTools.data.oldfileNames.length != 0 && !fileTools.data.noPath){
+    } else if (fileTools.data.oldFileNames.length != 0 && !fileTools.data.noPath){
         fileTools.data.clearData(false);
-    } else if(fileTools.data.oldfileNames.length != 0){
+    } else if(fileTools.data.oldFileNames.length != 0){
         fileTools.data.clearData(true);
     }
   
@@ -38,9 +38,9 @@ async function rename(){
         if(!document.getElementById('txtSubLang').value){
             fileTools.data.subLang = document.getElementById('txtSubLang').value;
         }
-        fileTools.data.newFileNames = fileTools.generateNewNamesForSubs(fileTools.data.oldfileNames.length, fileTools.data.startingEp);
+        fileTools.data.newFileNames = fileTools.generateNewNamesForSubs(fileTools.data.oldFileNames.length, fileTools.data.startingEp);
     } else{
-        fileTools.data.newFileNames = fileTools.generateNewNames(fileTools.data.oldfileNames.length, fileTools.data.startingEp);
+        fileTools.data.newFileNames = fileTools.generateNewNames(fileTools.data.oldFileNames.length, fileTools.data.startingEp);
     }
 
     let confrimBoxOptions = {
@@ -67,7 +67,7 @@ async function openFolderDialog(){
     //set InitialPath after file is selected to be used for directory remembering
     fileTools.data.initalPath = fileTools.data.path;
     fileTools.getFileNames();
-    displayList(fileTools.data.oldfileNames);  
+    displayList(fileTools.data.oldFileNames);  
     fileTools.data.noPath = false; 
 }
 
@@ -79,7 +79,7 @@ async function checkIfNoPath(){
 
 function refreshList(){
     fileTools.getFileNames();
-    displayList(fileTools.data.oldfileNames);
+    displayList(fileTools.data.oldFileNames);
 }
 
 function displayList(listToDisplay){
@@ -98,7 +98,7 @@ function getShowData(){
 
     // to fix a bug where if the user picks a folder with only folders in it the program will error out.
     try{
-        fileTools.data.fileType = path.extname(fileTools.data.oldfileNames[0]);
+        fileTools.data.fileType = path.extname(fileTools.data.oldFileNames[0]);
     }
     catch{
         dialog.showErrorBox('Renaming folders are we?','Are you trying to rename a Folder without video files in it? Please select another folder');

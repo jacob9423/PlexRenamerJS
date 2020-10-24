@@ -1,5 +1,5 @@
 
-var oldfileNames = [];
+var oldFileNames = [];
 var newFileNames = [];
 var path;
 var initalPath;
@@ -30,5 +30,5 @@ function clearData(clearDirectory){
             season = 1;
             startingEp = 1;
         }
-module.exports={oldfileNames, newFileNames, path, initalPath, fileType, numOfFiles, nameOfShow, season, subLang, noPath, firstRun, startingEp,subLangBool,clearData};
+module.exports={oldFileNames, newFileNames, path, initalPath, fileType, numOfFiles, nameOfShow, season, subLang, noPath, firstRun, startingEp,subLangBool,clearData};
     
