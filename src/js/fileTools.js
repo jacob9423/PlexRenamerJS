@@ -21,13 +21,14 @@ function getFileNames(){
     .map(dirent => dirent.name);
 
     //Check if the platform is mac. If so remove .DS_Store from list
-    if (isMac == "darwin") {
+    if (isMac == "darwin"){
         console.log(isMac);
         var index = data.oldfileNames.indexOf(".DS_Store");
-        if (index > -1) {
+        if (index > -1){
             data.oldfileNames.splice(index,1)
         }
     }
+    //Only get the file type after we know there is no .DS_Store files
     data.fileType = path.extname(data.oldfileNames[0]);
 }
 
