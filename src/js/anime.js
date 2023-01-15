@@ -2,8 +2,6 @@ var animeData;
 var romajiQuery = `
 query ($anime: String) {
   Media(search: $anime, type: ANIME) {
-    seasonYear
-    episodes
     title {
       english
       romaji
