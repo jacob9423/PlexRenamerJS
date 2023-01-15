@@ -1,5 +1,6 @@
 # PlexRenamer Electron Version
-Plex renamer is now on Electron. Completly changing the language from C# To JavaScript. The benefit of this being that the program now works on Windows and Linux (Currently only building for linux. But it will work for windows if electron-builder is configured to build for windows). This will be in it's own repo as it is rewritten in a new language. The C# Version can be found [here](https://github.com/jacob9423/Plex-Renamer). But it won't be updated anymore.
+Plex renamer is now on Electron. Completly changing the language from C# To JavaScript. The benefit of this being that the program now works on Windows and Linux (Currently only building for linux. But it will work for windows if electron-builder is configured to build for windows). This will be in it's own repo as it is rewritten in a new language. The C# Version can be found [here](https://github.com/jacob9423/Plex-Renamer). But it won't be updated anymore.   
+*NOTE:* the eamil in the package is a spam email that's never monitored. If you have an issue with the application please open a github issue. 
 
 -------------------------
 
@@ -36,7 +37,7 @@ The Convert Romanji feature if for anime only. It uses the [Anilist API](https:/
 
 # Building
   
-To build this applicaiton you need electron-builder and Node vesrion 12. Make sure to install the dependencies for the project with `npm install`
+To build this applicaiton you need electron-builder and Node vesrion 18. Make sure to install the dependencies for the project with `npm install`
   
 To install electron-builder use the command `npm install -g electron-builder` After electron builder is install open your terminal in the main diectory of PlexrenamerJS and run `electron-builder` and it will create binarys for Arch and Debian.
   

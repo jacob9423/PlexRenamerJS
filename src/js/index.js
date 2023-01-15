@@ -1,6 +1,5 @@
 const electron = require('electron');
-const dialog = require('electron').remote.dialog;
-const remote = require('electron').remote;
+const dialog = require('@electron/remote').dialog;
 const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const path = require('path');
@@ -27,7 +26,7 @@ async function rename(){
     } else if(fileTools.data.oldFileNames.length != 0){
         fileTools.data.clearData(true);
     }
-  
+
     await checkIfNoPath();
 
     getShowData();
